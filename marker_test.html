@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Tokoprint WebAR Test</title>
     
-    <!-- 🌟 最も安定して動作するバージョンの組み合わせに変更 -->
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
     <style>
         body { margin: 0; overflow: hidden; }
@@ -25,9 +24,8 @@
 
     <div id="scanning-overlay">TokoMarkerにかざしてください...</div>
 
-    <!-- 🌟 安定版の記述形式に最適化 -->
     <a-scene 
-        mindar-image="imageTargetSrc: ./targets.mind;" 
+        mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.001; filterBeta:10;" 
         color-space="sRGB" 
         renderer="colorManagement: true, physicallyCorrectLights: true" 
         vr-mode-ui="enabled: false" 
@@ -43,8 +41,9 @@
             <a-gltf-model 
                 src="#myModel" 
                 position="0 0 0" 
-                rotation="0 0 0" 
-                scale="1 1 1">
+                rotation="90 0 0" 
+                scale="1 1 1"
+                animation-mixer>
             </a-gltf-model>
         </a-entity>
 
