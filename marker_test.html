@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>MindAR マーカー型テスト</title>
+    <title>Tokoprint WebAR Test</title>
     
-    <!-- A-Frame と MindAR のライブラリを読み込み -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
     <style>
         body { margin: 0; overflow: hidden; }
-        /* 画面中央にローディングやスキャン中のUIを出すためのスタイリング */
         #scanning-overlay {
             position: absolute; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); color: white;
+            background: rgba(0,0,0,0.6); color: white;
             display: flex; justify-content: center; align-items: center;
-            font-family: sans-serif; font-size: 20px; z-index: 10;
+            font-family: sans-serif; font-size: 18px; z-index: 10;
             pointer-events: none;
         }
         .hidden { display: none !important; }
@@ -24,11 +22,8 @@
 </head>
 <body>
 
-    <!-- スキャン中案内（マーカーが見つかったら消えます） -->
-    <div id="scanning-overlay">マーカーにかざしてください...</div>
+    <div id="scanning-overlay">TokoMarkerにかざしてください...</div>
 
-    <!-- MindARのメインシーン設定 -->
-    <!-- imageTargetSrc に先ほど書き出した .mind ファイルを指定します -->
     <a-scene 
         mindar-image="imageTargetSrc: ./targets.mind; filterMinCF:0.001; filterBeta:10;" 
         color-space="sRGB" 
@@ -37,20 +32,12 @@
         device-orientation-permission-ui="enabled: false">
         
         <a-assets>
-            <!-- 自作のBlenderモデル（GLB）をここに登録（index.htmlで使用していたものを指定可能） -->
             <a-asset-item id="myModel" src="./test02.glb"></a-asset-item>
         </a-assets>
 
-        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-controls>
 
-        <!-- targetIndex: 0 は 1つ目のマーカーを指します -->
         <a-entity mindar-image-target="targetIndex: 0" id="ar-target">
-            <!-- 
-                マーカーの上に表示させるGLBモデル 
-                position: X(左右) Y(上下) Z(手前・奥)
-                scale: 大きさの倍率（Blenderの書き出しサイズに合わせて調整してください）
-                rotation: 傾き（90 0 0 でマーカーに対して垂直に立ち上がります）
-            -->
             <a-gltf-model 
                 src="#myModel" 
                 position="0 0 0" 
@@ -62,7 +49,6 @@
     </a-scene>
 
     <script>
-        // マーカーを検出したら「かざしてください」の文字を消す簡易スクリプト
         const target = document.querySelector('#ar-target');
         const overlay = document.querySelector('#scanning-overlay');
         
